@@ -1,0 +1,12 @@
+# Virtual environments
+.env
+.venv/
+
+# Python cache
+__pycache__/
+.pytest_cache/
+
+# Tests
+tests/
+pytest.ini
+requirements-dev.txt

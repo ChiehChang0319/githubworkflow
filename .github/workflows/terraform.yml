@@ -1,0 +1,68 @@
+name: Terraform CI 
+
+on:
+  pull_request:
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform.yaml"
+
+  push:
+    branches:
+      - main
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform.yaml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: terraform-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  terraform:
+    name: Terraform Disposable Plan
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: terraform
+
+    env:
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
+
+    steps:
+      # Checkout repository
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      # Install Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "latest"
+
+      # Terraform version
+      - name: Terraform Version
+        run: terraform version
+
+      # Terraform format
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+      
+      # Terraform Init (沒有remote backend, 使用默認 local backend)
+      - name: Terraform Init
+        run: terraform init
+   
+      # Terraform Validate
+      - name: Terraform Validate
+        run: terraform validate
+
+      # 7. Terraform Plan (ㄧ次性 terraform plan 測試)      
+      - name: Terraform Plan
+        run: terraform plan

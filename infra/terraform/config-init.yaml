@@ -1,0 +1,98 @@
+#cloud-config
+
+# 更新package metadata和安裝基本包
+package_update: true
+
+packages:
+  - curl
+  - ca-certificates
+
+# 寫創建文件和寫入content
+write_files:
+
+  # 官方Salt安裝腳本 bootstrap-salt.sh 
+  - path: /var/tmp/bootstrap-salt.sh
+    owner: root:root
+    permissions: "0755"
+    content: |
+      ${bootstrap_script}
+
+  # 安裝前,先將配置寫在/var/tmp
+  - path: /var/tmp/salt-bootstrap.conf
+    owner: root:root
+    permissions: "0644"
+    content: |
+      ${salt_config}
+
+# 執行Salt安裝和配置
+runcmd:
+
+  - |
+      set -Eeuo pipefail
+
+      echo "===Salt 安裝==="
+
+      echo "Role: ${role}"
+
+      if [ "${role}" = "master" ]; then
+
+        echo "===安裝 Salt Master==="
+        sh /var/tmp/bootstrap-salt.sh -M
+
+      elif [ "${role}" = "minion" ]; then
+
+          echo "===安裝 Salt Minion==="
+          sh /var/tmp/bootstrap-salt.sh
+
+      else
+          echo "ERROR Role ${role}"
+          exit 1
+
+      fi
+
+      echo "===Salt 安裝完成==="
+
+      echo "===Salt 配置設置==="
+ 
+       if [ "${role}" = "master" ]; then
+          
+          mkdir -p /etc/salt/master.d
+
+          cp  /var/tmp/salt-bootstrap.conf /etc/salt/master.d/bootstrap.conf
+
+          chmod 0644 /etc/salt/master.d/bootstrap.conf
+
+          echo "Salt Master 配置完成."
+
+      elif [ "${role}" = "minion" ]; then
+
+          mkdir -p /etc/salt/minion.d
+
+          cp /var/tmp/salt-bootstrap.conf /etc/salt/minion.d/bootstrap.conf
+
+          chmod 0644 /etc/salt/minion.d/bootstrap.conf
+
+          echo "Salt Minion 配置完成."
+
+      fi
+
+      echo "=== Salt 配置設置完成 ==="
+
+      echo "=== Salt 服務啟動 ==="
+
+
+      if [ "${role}" = "master" ]; then
+
+        systemctl enable salt-master
+        systemctl restart salt-master
+
+        echo "Salt Master 服務已啟動."
+
+      elif [ "${role}" = "minion" ]; then
+
+        systemctl enable salt-minion
+        systemctl restart salt-minion
+
+        echo "Salt Minion 服務已啟動."
+
+      fi
