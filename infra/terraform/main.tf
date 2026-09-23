@@ -56,7 +56,7 @@ resource "aws_instance" "salt_minion" {
       role = "minion"
 
       # salt_minion_config 配置文件 (Minion採用.tftpl模板進行動態render)
-      salt_minion_config = templatefile(
+      salt_config = templatefile(
         local.salt_minion_config,
         {
           salt_master_private_ip = aws_instance.salt_master.private_ip
