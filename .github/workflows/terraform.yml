@@ -53,7 +53,7 @@ jobs:
 
       # Terraform format
       - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+        run: terraform fmt -check -recursive -diff
       
       # Terraform Init (沒有remote backend, 使用默認 local backend)
       - name: Terraform Init

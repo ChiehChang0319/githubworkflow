@@ -74,7 +74,7 @@ resource "aws_instance" "salt_minion" {
   )
   # AWS tags
   tags = {
-    Name = "${local.name_prefix}-${each.value.name}" 
+    Name = "${local.name_prefix}-${each.value.name}"
     Role = "salt-minion"
   }
 }
