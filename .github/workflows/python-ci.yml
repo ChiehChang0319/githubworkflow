@@ -4,11 +4,18 @@ on:
   push:
     branches:
       - main
-      - master
+    paths:
+      - "apps/python/**"
+      - "deploy/**"
+      - ".github/workflows/python-ci.yaml"
 
   pull_request:
     branches:
       - main
+    paths:
+      - "apps/python/**"
+      - "deploy/**"
+      - ".github/workflows/python-ci.yaml"
       
   workflow_dispatch:
 
