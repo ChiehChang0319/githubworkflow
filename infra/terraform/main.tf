@@ -26,7 +26,7 @@ resource "aws_instance" "salt_master" {
       role = "master"
 
       # Salt 官方安裝腳本
-      bootstrap_script = file(local.bootstrap_salt_script)
+      #bootstrap_script = file(local.bootstrap_salt_script)
 
       # salt_master_config 配置文件 (同一個 master)
       salt_config = file(local.salt_master_config)
@@ -59,7 +59,7 @@ resource "aws_instance" "salt_minion" {
       role = "minion"
 
       # Salt 官方安裝腳本
-      bootstrap_script = file(local.bootstrap_salt_script)
+      #bootstrap_script = file(local.bootstrap_salt_script)
 
       # # salt_minion_config 配置文件 (Minion採用.tftpl模板進行動態render)
       salt_minion_config = templatefile(
