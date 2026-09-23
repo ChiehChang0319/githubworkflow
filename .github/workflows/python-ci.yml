@@ -55,6 +55,11 @@ jobs:
         working-directory: apps/python
         run: docker build -t python-service:test .
 
+      # 根據docker compose的 nginx service, 另外啟一個臨時nginx容器, nginx -t 檢測nginx.conf
+      - name: Validate Nginx config
+        working-directory: deploy
+        run: docker compose run --rm --no-deps nginx nginx -t
+
       - name: Run docker compose
         working-directory: deploy
         run: docker compose up -d
@@ -62,12 +67,12 @@ jobs:
       - name: Show running containers
         working-directory: deploy
         run: docker compose ps
-
+  
       - name: Wait for application
         working-directory: deploy
         run: |
           for i in {1..30}; do
-            if curl --fail --silent http://localhost:80/health; then
+            if curl --fail --silent http://localhost:80/python/health; then
               echo "Application is healthy"
               exit 0
             fi
@@ -82,7 +87,7 @@ jobs:
 
       - name: Test health endpoint
         run: |
-          response=$(curl --fail --silent --show-error http://localhost:80/health)
+          response=$(curl --fail --silent --show-error http://localhost:80/python/health)
 
           echo "Response: $response"
 
