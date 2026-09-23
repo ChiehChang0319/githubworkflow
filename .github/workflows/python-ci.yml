@@ -55,10 +55,10 @@ jobs:
         working-directory: apps/python
         run: docker build -t python-service:test .
 
-      # 新增 nginx -t 檢測nginx.conf
+      # 根據docker compose的 nginx service, 另外啟一個臨時nginx容器, nginx -t 檢測nginx.conf
       - name: Validate Nginx config
         working-directory: deploy
-        run: docker compose exec -T nginx nginx -t
+        run: docker compose run --rm nginx nginx -t
 
       - name: Run docker compose
         working-directory: deploy
