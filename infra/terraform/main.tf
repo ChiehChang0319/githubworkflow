@@ -25,9 +25,6 @@ resource "aws_instance" "salt_master" {
       # cloud-init傳參,role 用來判斷安裝 master 或 minion
       role = "master"
 
-      # Salt 官方安裝腳本
-      #bootstrap_script = file(local.bootstrap_salt_script)
-
       # salt_master_config 配置文件 (同一個 master)
       salt_config = file(local.salt_master_config)
     }
@@ -58,10 +55,7 @@ resource "aws_instance" "salt_minion" {
       # cloud-init傳參,role用來判斷安裝master或minion
       role = "minion"
 
-      # Salt 官方安裝腳本
-      #bootstrap_script = file(local.bootstrap_salt_script)
-
-      # # salt_minion_config 配置文件 (Minion採用.tftpl模板進行動態render)
+      # salt_minion_config 配置文件 (Minion採用.tftpl模板進行動態render)
       salt_minion_config = templatefile(
         local.salt_minion_config,
         {
