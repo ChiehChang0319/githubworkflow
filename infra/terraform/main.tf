@@ -1,6 +1,6 @@
 # SSH 公鑰
 resource "aws_key_pair" "deploy" {
-  key_name   = "${local.name}-key"
+  key_name   = "${local.name_prefix}-key"
   public_key = var.ssh_public_key
 
   tags = local.common_tags
@@ -74,7 +74,7 @@ resource "aws_instance" "salt_minion" {
   )
   # AWS tags
   tags = {
-    Name = each.value.name
+    Name = "${local.name_prefix}-${each.value.name}" 
     Role = "salt-minion"
   }
 }
