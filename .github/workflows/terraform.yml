@@ -3,14 +3,14 @@ name: Terraform CI
 on:
   pull_request:
     paths:
-      - "terraform/**"
+      - "infra/terraform/**"
       - ".github/workflows/terraform.yaml"
 
   push:
     branches:
       - main
     paths:
-      - "terraform/**"
+      - "infra/terraform/**"
       - ".github/workflows/terraform.yaml"
 
   workflow_dispatch:
@@ -30,7 +30,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform
+        working-directory: infra/terraform
 
     env:
       TF_IN_AUTOMATION: "true"
