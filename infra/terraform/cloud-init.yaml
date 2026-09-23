@@ -11,11 +11,11 @@ packages:
 write_files:
 
   # 官方Salt安裝腳本 bootstrap-salt.sh 
-  #  - path: /var/tmp/bootstrap-salt.sh
+  # - path: /var/tmp/bootstrap-salt.sh
   #  owner: root:root
   #  permissions: "0755"
   #  content: |
-  #    ${bootstrap_script}
+  #  ${bootstrap_script}
 
   # 安裝前,先將配置寫在/var/tmp
   - path: /var/tmp/salt-bootstrap.conf

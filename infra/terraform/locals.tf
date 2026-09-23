@@ -26,7 +26,7 @@ locals {
   }
 
   # bootstrap_salt_script 腳本位置
-  bootstrap_salt_script = "${path.module}/../../scripts/bootstrap-salt.sh"
+  #bootstrap_salt_script = "${path.module}/../../scripts/bootstrap-salt.sh"
 
   # salt_master_config 配置文件位置 (同一個 master)
   salt_master_config = "${path.module}/../../salt/master-config/bootstrap.conf"
