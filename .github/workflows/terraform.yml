@@ -48,6 +48,13 @@ jobs:
         with:
           terraform_version: "latest"
 
+      # GitHub OIDC token 簽發令牌獲取短期 AWS credentials 憑證, 去調用AWS API
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
       # Terraform version
       - name: Terraform Version
         run: terraform version
