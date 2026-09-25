@@ -9,7 +9,7 @@ locals {
     ManagedBy   = "Terraform"
   }
 
-  # Salt Minion 另外拉出來傳參管理
+  # Salt Minion 另外拉出來傳參管理, salt_minions = { each.key => {each.value} }
   salt_minions = {
     minion01 = {
       name = "salt-minion-01"

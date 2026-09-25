@@ -38,7 +38,7 @@ resource "aws_instance" "salt_master" {
 
 # salt-minion
 resource "aws_instance" "salt_minion" {
-  for_each = local.salt_minions # Salt Minion 另外拉出來傳參管理
+  for_each = local.salt_minions # Salt Minion 另外拉出來傳參管理, aws_instance.salt_minion[each.key] => {each.value}
 
   ami           = data.aws_ami.ubuntu.id        # AMI鏡像ID
   instance_type = var.salt_minion_instance_type # Minion實例type
