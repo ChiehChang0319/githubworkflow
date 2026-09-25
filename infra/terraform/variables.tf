@@ -76,4 +76,6 @@ variable "ssh_public_key" {
 variable "ami_owner_id" {
   description = "AMI owner AWS account ID"
   type        = string
+
+  default = "099720109477" # ubuntu官方鏡像AMI
 }
