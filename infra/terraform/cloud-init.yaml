@@ -18,6 +18,14 @@ write_files:
     content: |
       ${salt_config}
 
+  # 先將salt_states(是Base64編碼後字符) 進行Base64解碼再寫入到tar.gz(二進制)
+  - path: /var/tmp/salt-states.tar.gz
+    owner: root:root
+    permissions: "0644"
+    encoding: b64
+    content: |
+      ${salt_states}
+
 # 執行Salt安裝和配置
 runcmd:
 
@@ -66,7 +74,18 @@ runcmd:
 
           chmod 0644 /etc/salt/master.d/bootstrap.conf
 
+          mkdir -p /srv/salt
+
+          tar --extract --gzip \
+            --file /var/tmp/salt-states.tar.gz \
+            --directory /srv/salt
+
+          chown -R root:root /srv/salt
+
           echo "Salt Master 配置完成."
+
+          echo "=== Salt States 內容 ==="
+          find /srv/salt -type f -print
 
       elif [ "${role}" = "minion" ]; then
 

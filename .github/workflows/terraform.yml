@@ -16,8 +16,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  id-token: write
+  contents: read   # 准許讀取 repository 代碼內容
+  id-token: write  # 准許 GitHub Workflow 請求 OIDC token
 
 concurrency:
   group: terraform-${{ github.workflow }}-${{ github.ref }}

@@ -27,6 +27,9 @@ resource "aws_instance" "salt_master" {
 
       # salt_master_config 配置文件 (同一個 master)
       salt_config = file(local.salt_master_config)
+
+      # 傳入states目錄和sls文件(salt states) 到 salt-master的/srv/states
+      salt_states = local.salt_states
     }
   )
   # AWS tags 

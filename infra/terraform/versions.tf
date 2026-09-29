@@ -10,5 +10,11 @@ terraform {
       version = "~> 6.0"
     }
 
+    # 使用 archive provider, terraform官方插件來打包壓縮包
+    archive = {
+      source  = "hashicorp/archive"
+      version = "~> 2.7"
+    }
+
   }
 }

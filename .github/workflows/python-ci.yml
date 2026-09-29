@@ -21,7 +21,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/python
+  IMAGE_NAME: ${{ github.repository }}/python-fastapi
 
 jobs:
   test:
