@@ -33,6 +33,6 @@ locals {
   salt_minion_config = "${path.module}/../../salt/minion-config/bootstrap.conf.tftpl"
 
   # 獲取 archive_file.salt_states二進制內容(data.archive_file.salt_states.output),再Base64編碼 二進制轉字符
-  salt_states = base64encode(data.archive_file.salt_states.output)
+  salt_states = base64encode(data.archive_file.salt_states.output_path)
 
 }
