@@ -67,6 +67,9 @@ resource "aws_instance" "salt_minion" {
         }
       )
 
+      # salt-minion 不需要salt states目錄和sls文件 (配合cloud init 傳參 "")
+      salt_states = ""
+
     }
   )
   # AWS tags
