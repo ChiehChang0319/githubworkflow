@@ -65,6 +65,18 @@ variable "salt_minion_instance_type" {
   default = "t3.micro"
 }
 
+# salt minion 的 grains , app:xxx
+variable "salt_minion_applications" {
+  type = map(string)
+
+  # 後面可以透過salt grains來對Target目標節點進行安裝部署對應服務, 使用var變量可自定義值
+  default = {
+    minion01 = "proxy",
+    minion02 = "backend",
+    minion03 = "database"
+  }
+}
+
 # EC2的 SSH公鑰
 variable "ssh_public_key" {
   description = "SSH public key"

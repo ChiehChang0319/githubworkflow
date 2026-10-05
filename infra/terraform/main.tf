@@ -64,6 +64,9 @@ resource "aws_instance" "salt_minion" {
         {
           salt_master_private_ip = aws_instance.salt_master.private_ip
           minion_id              = each.value.name
+
+          # 新增自定義grains key:app 進行 Target 目標節點管理, salt 'salt-minion-01' grains.get app
+          minion_app = each.value.app
         }
       )
 

@@ -13,14 +13,17 @@ locals {
   salt_minions = {
     minion01 = {
       name = "salt-minion-01"
+      app  = var.salt_minion_applications["minion01"]
     }
 
     minion02 = {
       name = "salt-minion-02"
+      app  = var.salt_minion_applications["minion02"]
     }
 
     minion03 = {
       name = "salt-minion-03"
+      app  = var.salt_minion_applications["minion03"]
     }
 
   }
