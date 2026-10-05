@@ -18,7 +18,7 @@ VM機器上的配置管理，使用Salt Master和Salt Minion架構，後續機�
 (使用 **draw.io** 畫圖展示)
 
 ### 1. 應用程序代碼交付 (使用 GitHub Workflow 搭建自動化pipeline)
-![alt text](docs/images/flowchart.png)
+![alt text](docs/images/flowchart.webp)
 
 1. **Code Commit/Merge branch**: 開發提交代碼/合併分支，依據不同Github Event事件觸發GitHub Trigger
 2. **Code tests**: 開發代碼自動化測試驗證 
@@ -26,43 +26,43 @@ VM機器上的配置管理，使用Salt Master和Salt Minion架構，後續機�
 4. **Build and push production image**: 正式環境鏡像打包和推送指定鏡像倉庫Registry，這邊推送到GHCR (GitHub Container Registry)
 
 
-![alt text](docs/images/workflow-cicd.png)
+![alt text](docs/images/workflow-cicd.webp)
 
 #### Code tests job 的 steps 步驟
-![alt text](docs/images/code-tests-job.png)
+![alt text](docs/images/code-tests-job.webp)
 
 #### Docker integration test job 的 steps 步驟
-![alt text](docs/images/docker-integration-test-job.png)
+![alt text](docs/images/docker-integration-test-job.webp)
 
 #### Build and push production image job 的 steps 步驟
-![alt text](docs/images/build-and-push-production-image-job.png)
+![alt text](docs/images/build-and-push-production-image-job.webp)
 
 
 ### 2. 基礎設施資源管理 (使用 Terraform 批量管理)
 ### AWS 網絡架構
-![alt text](docs/images/aws-architecture.png)
+![alt text](docs/images/aws-architecture.webp)
 
 
 ### 使用 GitHub OIDC + IAM Role 方案來調用AWS資源服務
 - 解決 AWS Access Key 長期金鑰保存在第三方服務的外洩風險 : 防止 `AWS_ACCESS_KEY_ID ` 和 `AWS_SECRET_ACCESS_KEY` 外洩
 
 
-![alt text](docs/images/sequence-diagram.png)
+![alt text](docs/images/sequence-diagram.webp)
 
 #### AWS IAM 設置 - 添加身份供應商 Identity providers
-![alt text](docs/images/aws-iam-01.png)
+![alt text](docs/images/aws-iam-01.webp)
 - 身份供應商 Identity providers：  
 https://token.actions.githubusercontent.com
 
 - 對象 Audience：  
 sts.amazonaws.com
 
-![alt text](docs/images/aws-iam-02.png)
+![alt text](docs/images/aws-iam-02.webp)
 
 #### AWS IAM 設置 - 創建角色 IAM Role
 
 **Trust Policy** : 設置誰可以獲取這個 Role
-![alt text](docs/images/aws-iam-03.png)
+![alt text](docs/images/aws-iam-03.webp)
 
 - 身份供應商 Identity providers：https://token.actions.githubusercontent.com
 
@@ -75,10 +75,10 @@ sts.amazonaws.com
 - GitHub branch - 選填 : 填寫指定分支
 
 **Permissions Policy** : 設置這個 Role 的權限
-![alt text](docs/images/aws-iam-04.png)
+![alt text](docs/images/aws-iam-04.webp)
 
 **角色命名** 
-![alt text](docs/images/aws-iam-05.png)
+![alt text](docs/images/aws-iam-05.webp)
 
 備注： 2026/07/15 創建之後的 Repository，Trust Policy 要寫成 Immutable format，需要添加 Owner ID (Organization ID) 和 Repository ID   
 
@@ -96,5 +96,5 @@ GitHub OIDC官方文檔： https://docs.github.com/en/actions/reference/security
 
 
 ## 四、GitHub Container Registry (GHCR) 鏡像倉庫
-![alt text](docs/images/ghcr.png)
+![alt text](docs/images/ghcr.webp)
 
